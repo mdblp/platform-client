@@ -346,8 +346,8 @@ module.exports = function (config, deps) {
 
       var users = userIds.join(',');
       common.doGetWithToken(
-        `/aggregates/tir?userIds=${users}`,
-        { 200: function(res){ return res.body; }, 404: [] },
+        `/compute/tir?userIds=${users}`,
+        { 200: function(res){ return res.body; }, 404: {}, 403: {} },
         cb
       );
     },
