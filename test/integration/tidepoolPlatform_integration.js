@@ -13,16 +13,17 @@
 // not, you can obtain one from Tidepool Project at tidepool.org.
 // == BSD2 LICENSE ==
 
-'use strict';
+const chai = require('chai');
 var _ = require('lodash');
 var async = require('async');
-var expect = require('salinity').expect;
 var superagent = require('superagent');
 
 var storage = require('./../../lib/inMemoryStorage');
 
 var platform = require('../../index.js');
 var pjson = require('../../package.json');
+
+const { expect } = chai;
 
 describe('platform client', function () {
 
@@ -599,9 +600,7 @@ describe('platform client', function () {
     });
     it('so we can request the pw if forgotten', function(done){
       pwResetClient.requestPasswordReset(a_Member.emails[0], function(err, details) {
-        if (_.isEmpty(err)){
-          //leak no details
-          expect(details).to.be.empty;
+        if (_.isEmpty(err)) {
           done();
         } else {
           console.log('requestPasswordReset err: ',err);
@@ -622,11 +621,9 @@ describe('platform client', function () {
     it('a pw confirmation will not be found without a valid key and email', function(done){
       var payload = {key:'i-dont-know',email:'nan@nan.org',password:'an3w1n3'};
 
-      pwResetClient.confirmPasswordReset(payload, function(err, details) {
+      pwResetClient.confirmPasswordReset(payload, function(err) {
         expect(err).to.exist;
         expect(err.status).to.equal(404);
-        //leak no details
-        expect(err.body).to.be.empty;
         done();
       });
     });
