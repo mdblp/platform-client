@@ -5,7 +5,7 @@
   "main": "tidepool.js",
   "scripts": {
     "test": "grunt test",
-    "security-checks": "npm audit --production --registry=https://registry.npmjs.org/"
+    "security-checks": "npm audit --production --audit-level=high --registry=https://registry.npmjs.org/"
   },
   "repository": "https://github.com/tidepool-org/platform-client.git",
   "author": "Tidepool",
