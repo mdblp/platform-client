@@ -7,6 +7,10 @@ node_js:
   - 10.15.3
   - lts/*
 
+matrix:
+  allow_failures:
+    - node_js: lts/*
+
 cache: npm
 
 before_install:
