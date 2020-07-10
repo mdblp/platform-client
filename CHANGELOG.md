@@ -1,7 +1,7 @@
 # tidepool-platform-client
 Client-side library to interact with the [Tidepool](http://tidepool.org/) platform.
 
-## 0.3.0 - 2020-07-02
+## 0.3.0 - 2020-07-10
 ###  Changed
 - PT-1410 Password reset for patient is triggering information message
 ### Engineering
