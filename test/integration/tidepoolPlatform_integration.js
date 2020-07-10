@@ -598,12 +598,22 @@ describe('platform client', function () {
         done();
       });
     });
-    it('so we can request the pw if forgotten', function(done){
+    it('so we can request the pw if forgotten - no info', function(done) {
       pwResetClient.requestPasswordReset(a_Member.emails[0], function(err) {
         if (_.isEmpty(err)) {
           done();
         } else {
-          console.log('requestPasswordReset err: ',err);
+          console.log('requestPasswordReset err:', err);
+          done(err);
+        }
+      }, false);
+    });
+    it('so we can request the pw if forgotten - with info', function(done) {
+      pwResetClient.requestPasswordReset(a_Member.emails[0], function(err) {
+        if (_.isEmpty(err)) {
+          done();
+        } else {
+          console.log('requestPasswordReset err:', err);
           done(err);
         }
       });
