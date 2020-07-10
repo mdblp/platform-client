@@ -599,7 +599,7 @@ describe('platform client', function () {
       });
     });
     it('so we can request the pw if forgotten', function(done){
-      pwResetClient.requestPasswordReset(a_Member.emails[0], function(err, details) {
+      pwResetClient.requestPasswordReset(a_Member.emails[0], function(err) {
         if (_.isEmpty(err)) {
           done();
         } else {
@@ -611,7 +611,7 @@ describe('platform client', function () {
     it('a pw confirmation will be rejected without all the required details', function(done){
       var payload = {key:'i-dont-know',email:'nan@nan.org'};
 
-      pwResetClient.confirmPasswordReset(payload, function(err, details) {
+      pwResetClient.confirmPasswordReset(payload, function(err) {
         expect(err).to.exist;
         expect(err.status).to.equal(400);
         expect(err.body).to.equal('payload requires object with `key`, `email`, `password`');
