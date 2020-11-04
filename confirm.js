@@ -104,23 +104,31 @@ module.exports = function (common, deps) {
     /**
      * Resend an existing invite
      *
-     * @param {String} email - email of the user that send the invite
-     * @param cb
-     * @returns {cb}  cb(err)
+     * @param {string} email - email of the user requesting the password reset
+     * @param {string} lang - The language for the e-mail
+     * @param {(err: object) => void} cb callback
      */
-    signupResend: function (email, cb) {
-      common.assertArgumentsSize(arguments, 2);
-      superagent
-       .post(common.makeAPIUrl('/confirm/resend/signup/' + email))
-       .end(function (err, res) {
-        if (err != null) {
-          err.message = (err.response && err.response.error) || '';
-          return cb(err);
+    signupResend: function (email, lang = 'en', cb = _.noop) {
+      if (_.isEmpty(email) || !_.isString(email)) {
+        throw new Error('Invalid parameter email');
+      }
+
+      const url = common.makeAPIUrl(`/confirm/resend/signup/${email}`);
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'x-tidepool-trace-session': common.getSessionTrace(),
+          'x-tidepool-language': lang,
+        },
+        cache: 'no-cache',
+      }).then(async (response) => {
+        if (response.ok) {
+          return cb(null);
         }
-        if (res.status !== 200) {
-          return cb({status:res.status,message:res.error});
-        }
-        return cb();
+        cb({ status: response.status, message: await response.text() });
+      }).catch((reason) => {
+        cb(reason);
       });
     },
     /**
@@ -162,8 +170,6 @@ module.exports = function (common, deps) {
      */
     invitesReceived: function (inviteeId,cb) {
       common.assertArgumentsSize(arguments, 2);
-
-      var self = this;
 
       superagent
         .get(common.makeAPIUrl('/confirm/invitations/'+inviteeId))
