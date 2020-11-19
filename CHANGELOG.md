@@ -1,9 +1,13 @@
 # tidepool-platform-client
 Client-side library to interact with the [Tidepool](http://tidepool.org/) platform.
 
-## 0.4.0 - 2020-11-19
+## 0.5.0 - 2020-11-19
 ###  Added
 - YLP-323 Add call to fetch user consents from seagull
+
+## 0.4.0 - 2020-11-04
+### Changed
+- YLP-264 Pick country and language when signing up
 
 ## 0.3.0 - 2020-07-10
 ###  Changed
